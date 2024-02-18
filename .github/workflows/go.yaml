@@ -10,6 +10,8 @@ env:
   REGISTRY: "cr.selcloud.ru/psakine"
   IMAGE_NAME: "auth-server"
   CONTAINER_NAME: "auth-server-container"
+  GRPC_HOST: "0.0.0.0"
+  GRPC_PORT: "50051"
 
 jobs:
   image-build-and-push:
@@ -40,7 +42,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSHKEY }}
-          envs: REGISTRY,IMAGE_NAME,CONTAINER_NAME,GITHUB_SHA
+          envs: REGISTRY,IMAGE_NAME,CONTAINER_NAME,GITHUB_SHA,GRPC_PORT
           script: |
             # Set up variables
             TAG_NAME=$(echo $GITHUB_SHA | head -c7)
@@ -55,7 +57,7 @@ jobs:
             docker rm $CONTAINER_NAME
             
             # Run new container from new image
-            docker run -d -p 50051 --name $CONTAINER_NAME -t $REGISTRY/$IMAGE_NAME:$TAG_NAME
+            docker run -d -p $GRPC_PORT:$GRPC_PORT --name $CONTAINER_NAME -t $REGISTRY/$IMAGE_NAME:$TAG_NAME
   build-and-test:
     runs-on: ubuntu-latest
     steps:
