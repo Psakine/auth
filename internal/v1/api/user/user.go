@@ -2,9 +2,7 @@ package user
 
 import (
 	"context"
-
 	"github.com/brianvoe/gofakeit/v6"
-	"github.com/go-faker/faker/v4"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/Psakine/auth/pkg/user_v1"
@@ -36,7 +34,7 @@ func (s *Server) Get(_ context.Context, _ *user_v1.GetRequest) (*user_v1.GetResp
 // Create ...
 func (s *Server) Create(_ context.Context, _ *user_v1.CreateRequest) (*user_v1.CreateResponse, error) {
 	return &user_v1.CreateResponse{
-		Id: faker.RandomUnixTime(),
+		Id: gofakeit.Int64(),
 	}, nil
 }
 

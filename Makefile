@@ -32,8 +32,3 @@ install-golangci-lint:
 
 lint:
 	GOBIN=$(LOCAL_BIN) ${LOCAL_BIN}/golangci-lint run ./... --config .golangci.pipeline.yaml
-
-docker-build-and-push:
-	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/psakine/auth-server:v0.0.1 .
-	docker login -u token -p CRgAAAAASS16bb7CULZ5iZ4Yh8O1NwXIgzK4xJ6L cr.selcloud.ru/psakine
-	docker push cr.selcloud.ru/psakine/auth-server:v0.0.1
