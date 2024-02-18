@@ -1,5 +1,11 @@
 LOCAL_BIN:=$(CURDIR)/bin
 
+build-mac:
+	go build -o ${LOCAL_BIN}/ ${CURDIR}/cmd/grpc_server/main.go
+
+build-linux:
+	GOOS=linux GOARCH=amd64 go build -o ${LOCAL_BIN}/service_auth_linux ${CURDIR}/cmd/grpc_server/main.go
+
 install-deps:
 	GOBIN=$(LOCAL_BIN) go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1
 	GOBIN=$(LOCAL_BIN) go install -mod=mod google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
@@ -26,3 +32,8 @@ install-golangci-lint:
 
 lint:
 	GOBIN=$(LOCAL_BIN) ${LOCAL_BIN}/golangci-lint run ./... --config .golangci.pipeline.yaml
+
+docker-build-and-push:
+	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/psakine/auth-server:v0.0.1 .
+	docker login -u token -p CRgAAAAASS16bb7CULZ5iZ4Yh8O1NwXIgzK4xJ6L cr.selcloud.ru/psakine
+	docker push cr.selcloud.ru/psakine/auth-server:v0.0.1
