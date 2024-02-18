@@ -1,14 +1,32 @@
 package config
 
-import "github.com/joho/godotenv"
+import (
+	"net"
+)
 
-// Load loads values from env
-func Load(path string) error {
-	err := godotenv.Load(path)
+const (
+	grpcHostEnvName = "0.0.0.0"
+	grpcPortEnvName = "50051"
+)
 
-	if err != nil {
-		return err
-	}
+// GRPCConfig describes config interface
+type GRPCConfig interface {
+	Address() string
+}
 
-	return err
+type grpcConfig struct {
+	host string
+	port string
+}
+
+// NewGRPCConfig creates config struct
+func NewGRPCConfig() (GRPCConfig, error) {
+	return &grpcConfig{
+		host: grpcHostEnvName,
+		port: grpcPortEnvName,
+	}, nil
+}
+
+func (cfg *grpcConfig) Address() string {
+	return net.JoinHostPort(cfg.host, cfg.port)
 }
