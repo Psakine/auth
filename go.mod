@@ -1,10 +1,18 @@
-module github.com/olezhek28/microservices_course_boilerplate
+module github.com/Psakine/auth
 
-go 1.20
+go 1.21
 
 require (
-	github.com/fatih/color v1.15.0 // indirect
-	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.17 // indirect
-	golang.org/x/sys v0.6.0 // indirect
+	github.com/brianvoe/gofakeit/v6 v6.28.0
+	github.com/joho/godotenv v1.5.1
+	golang.org/x/net v0.20.0
+	google.golang.org/grpc v1.61.1
+	google.golang.org/protobuf v1.32.0
+)
+
+require (
+	github.com/golang/protobuf v1.5.3 // indirect
+	golang.org/x/sys v0.16.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240205150955-31a09d347014 // indirect
 )
